@@ -35,7 +35,7 @@ class Enseignant
     private ?string $specialite = null;
 
     #[ORM\OneToOne(inversedBy: 'enseignant')]
-    #[ORM\JoinColumn(nullable: true, unique: true)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'president', targetEntity: Soutenance::class)]
