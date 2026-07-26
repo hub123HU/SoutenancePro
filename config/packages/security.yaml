@@ -29,8 +29,7 @@ security:
                 path: /
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/$, roles: ROLE_USER }
-        - { path: ^/user, roles: ROLE_ADMIN }
+        - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/etudiant, roles: ROLE_ADMIN }
         - { path: ^/enseignant, roles: ROLE_ADMIN }
         - { path: ^/salle, roles: ROLE_ADMIN }
