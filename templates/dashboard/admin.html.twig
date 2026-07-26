@@ -1,0 +1,48 @@
+{# templates/dashboard/admin.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Administrateur{% endblock %}
+
+{% block body %}
+<p class="eyebrow mb-1">Vue d'ensemble</p>
+<h1 class="h3 mb-4">Tableau de bord</h1>
+
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="stat-card" style="--stat-accent: #24316B;">
+            <div>
+                <div class="stat-label">Étudiants</div>
+                <div class="stat-value">{{ stats.etudiants }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-people"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--stat-accent: #3F6C51;">
+            <div>
+                <div class="stat-label">Enseignants</div>
+                <div class="stat-value">{{ stats.enseignants }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-person-badge"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--stat-accent: #3A6B7A;">
+            <div>
+                <div class="stat-label">Salles</div>
+                <div class="stat-value">{{ stats.salles }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-building"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--stat-accent: #96762A;">
+            <div>
+                <div class="stat-label">Soutenances</div>
+                <div class="stat-value">{{ stats.soutenances }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-calendar-event"></i></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

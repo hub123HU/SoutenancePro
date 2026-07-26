@@ -1,0 +1,47 @@
+{# templates/soutenance/mes_jurys.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes jurys{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Mes jurys</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Thème</th>
+                <th>Salle</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Mon rôle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for soutenance in soutenances %}
+            <tr>
+                <td>{{ soutenance.etudiant.nomComplet }}</td>
+                <td>{{ soutenance.etudiant.themeMemoire }}</td>
+                <td>{{ soutenance.salle.code }}</td>
+                <td>{{ soutenance.date|date('d/m/Y') }}</td>
+                <td>{{ soutenance.heure|date('H:i') }}</td>
+                <td>
+                    {% if soutenance.president == enseignant %}
+                        <span class="badge bg-primary">Président</span>
+                    {% elseif soutenance.rapporteur == enseignant %}
+                        <span class="badge bg-success">Rapporteur</span>
+                    {% else %}
+                        <span class="badge bg-info">Examinateur</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">Vous ne participez à aucun jury pour le moment</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{# templates/soutenance/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des soutenances{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{% if isAdmin %}Gestion des{% else %}Mes{% endif %} soutenances</h1>
+    {% if isAdmin %}
+    <a href="{{ path('app_soutenance_new') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Programmer une soutenance
+    </a>
+    {% endif %}
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Thème</th>
+                <th>Président</th>
+                <th>Rapporteur</th>
+                <th>Examinateur</th>
+                <th>Salle</th>
+                <th>Date</th>
+                <th>Heure</th>
+                {% if isAdmin %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for soutenance in soutenances %}
+            <tr>
+                <td>{{ soutenance.etudiant.nomComplet }}</td>
+                <td>{{ soutenance.etudiant.themeMemoire }}</td>
+                <td>{{ soutenance.president.nomComplet }}</td>
+                <td>{{ soutenance.rapporteur.nomComplet }}</td>
+                <td>{{ soutenance.examinateur.nomComplet }}</td>
+                <td>{{ soutenance.salle.code }}</td>
+                <td>{{ soutenance.date|date('d/m/Y') }}</td>
+                <td>{{ soutenance.heure|date('H:i') }}</td>
+                {% if isAdmin %}
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="{{ path('app_soutenance_edit', {id: soutenance.id}) }}" 
+                           class="btn btn-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <form method="POST" action="{{ path('app_soutenance_delete', {id: soutenance.id}) }}" 
+                              onsubmit="return confirm('Annuler cette soutenance ?')">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ soutenance.id) }}">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+                {% endif %}
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="{% if isAdmin %}9{% else %}8{% endif %}" class="text-center">
+                    Aucune soutenance programmée
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

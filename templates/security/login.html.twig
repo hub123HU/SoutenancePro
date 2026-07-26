@@ -1,0 +1,39 @@
+{# templates/security/login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-seal">
+            {{ include('_crest.html.twig') }}
+            <h1>SoutenancePro</h1>
+            <p>Connexion</p>
+        </div>
+        <div class="auth-body">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" name="_username" id="inputEmail"
+                           class="form-control" value="{{ last_username }}" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="_password" id="inputPassword"
+                           class="form-control" required>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button class="btn btn-primary w-100" type="submit">
+                    <i class="bi bi-box-arrow-in-right"></i> Se connecter
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

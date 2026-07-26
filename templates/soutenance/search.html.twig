@@ -1,0 +1,60 @@
+{# templates/soutenance/search.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher des soutenances{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Rechercher des soutenances</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-10">
+                <input type="date" name="date" class="form-control" value="{{ date|default('') }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Rechercher
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Thème</th>
+                <th>Président</th>
+                <th>Rapporteur</th>
+                <th>Examinateur</th>
+                <th>Salle</th>
+                <th>Date</th>
+                <th>Heure</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for soutenance in soutenances %}
+            <tr>
+                <td>{{ soutenance.etudiant.nomComplet }}</td>
+                <td>{{ soutenance.etudiant.themeMemoire }}</td>
+                <td>{{ soutenance.president.nomComplet }}</td>
+                <td>{{ soutenance.rapporteur.nomComplet }}</td>
+                <td>{{ soutenance.examinateur.nomComplet }}</td>
+                <td>{{ soutenance.salle.code }}</td>
+                <td>{{ soutenance.date|date('d/m/Y') }}</td>
+                <td>{{ soutenance.heure|date('H:i') }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" class="text-center">
+                    {% if date %}Aucune soutenance à cette date{% else %}Choisissez une date pour lancer la recherche{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
