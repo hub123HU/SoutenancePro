@@ -1,0 +1,84 @@
+{# templates/dashboard/enseignant.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Enseignant{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <p class="eyebrow mb-1">Espace enseignant</p>
+        <h1 class="h3 mb-4">Bonjour {{ enseignant.prenom }} {{ enseignant.nom }}</h1>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="stat-card" style="--stat-accent: #24316B;">
+            <div>
+                <div class="stat-label">Mes soutenances</div>
+                <div class="stat-value">{{ soutenances|length }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="stat-card" style="--stat-accent: #3F6C51;">
+            <div>
+                <div class="stat-label">Étudiants concernés</div>
+                <div class="stat-value">{{ etudiants|length }}</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-people"></i></div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Mes soutenances programmées</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Étudiant</th>
+                                <th>Thème</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Salle</th>
+                                <th>Mon rôle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for soutenance in soutenances %}
+                            <tr>
+                                <td>{{ soutenance.etudiant.nomComplet }}</td>
+                                <td>{{ soutenance.etudiant.themeMemoire }}</td>
+                                <td>{{ soutenance.date|date('d/m/Y') }}</td>
+                                <td>{{ soutenance.heure|date('H:i') }}</td>
+                                <td>{{ soutenance.salle.code }}</td>
+                                <td>
+                                    {% if soutenance.president == enseignant %}
+                                        <span class="badge bg-primary">Président</span>
+                                    {% elseif soutenance.rapporteur == enseignant %}
+                                        <span class="badge bg-success">Rapporteur</span>
+                                    {% else %}
+                                        <span class="badge bg-info">Examinateur</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">Aucune soutenance programmée</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
